@@ -1,21 +1,22 @@
-
+clear; close all; clc;
 %% Read parameters
 rho1 = 950;
 rho2 = 1.205;
 eta1 = 20.9e-6 * rho1;
 eta2 = 1.82e-5;
-h1 = 0.3e-2;
-h2 = 2.31e-04;
+h1 = 0.3e-2;t
+h2 = 0.3e-2;
 sigma = 20.6e-3;
-kmin = 0;
-kmax = 20e2;
-f =  11;
+kmin = 0e3;
+kmax = 7e3;
+kgap = 10;
+f =  80;
 mm = 4;
 ll = 5;
-chi = 60*pi/180;
+chi = 67.7*pi/180;
 g = 9.8066;
-amax = 30.0*g;
-CASE = 3;
+amax = 300.0*g;
+CASE = 1;
 omega = 2*pi*f;
 warning('off');
 phi = 0;
@@ -26,7 +27,7 @@ alpha = 0.5*omega;
 subharmonicData = [];
 N = 20;
 mu = 0;
-for zz = kmin:kmax
+for zz = kmin:kgap:kmax
     k = zz;
     A = zeros(2*(N+1),2*(N+1));
     for n = 0:N
@@ -136,7 +137,7 @@ end
 %% Harmonic
 alpha = 0;
 harmonicData = [];
-for zz = kmin:kmax
+for zz = kmin:kgap:kmax
     k = zz;
     A = zeros(2*(N+1),2*(N+1));
     for n = 0:N
