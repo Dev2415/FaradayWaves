@@ -1,32 +1,33 @@
-
+clear; close all; clc;
 %% Read parameters
 rho1 = 950;
 rho2 = 1.205;
-eta1 = 2.3e-5 * rho1;
+eta1 = 23e-6 * rho1;
 eta2 = 1.82e-5;
-h1 = 0.2e-2;
+h1 = 0.155e-2;
 h2 = 2.31e-04;
 sigma = 21.5e-3;
 kmin = 0;
-kmax = 60e2;
-f =  25;
-mm = 3;
-ll = 2;
-% chi = 45*pi/180;
+kmax = 20e2;
+f =  20;
+mm = 2;
+ll = 3;
+% chi = 50*pi/180;
 g = 9.8066;
-amax = 10.0*g;
+amax = 100.0*g;
 CASE = 3;
 omega = 2*pi*f;
 warning('off');
 thresholdData = [];
-for chi = 0*pi/180 : pi/180 : 90*pi/180
+for C = 1 : 90+1
+chi = (C-1)*pi/180;
 disp(chi);
 %% Subharmonic
 alpha = 0.5*omega;
 subharmonicData = [];
-N = 10;
+N = 40;
 mu = 0;
-for zz = kmin:kmax
+for zz = kmin:10:kmax
     k = zz;
     A = zeros(2*(N+1),2*(N+1));
     for n = 0:N
@@ -262,9 +263,11 @@ Data = [subharmonicData; harmonicData];
 [a_c, ID] = min(Data(:,1));
 thresholdData = [thresholdData; chi, a_c, Data(ID,2)];
 end
-
+subplot(2,1,1);
 plot(thresholdData(:,1), thresholdData(:,2));
-
+subplot(2,1,2);
+plot(thresholdData(:,2).*cos(thresholdData(:,1)), thresholdData(:,2).*...
+    sin(thresholdData(:,1)));
 function id = idr(ii)
     id = 2*ii + 1;
 end
